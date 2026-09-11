@@ -1,20 +1,31 @@
 class LRUCache {
     private:
+
         int cap;
 
-        std::list<std::pair<int,int>> dll;
+        using ListType = std::list<std::pair<int,int>>;
 
-        std::unordered_map<int,std::list<std::pair<int,int>>::iterator> map;
+        ListType dll;
+
+        //key,value 
+        std::unordered_map<int,ListType::iterator> map;
 
 public:
+
+    //constructor
+    //this tells LRUCche that it has capacity of 2 items
     LRUCache(int capacity) {
         cap = capacity;
     }
     
+
     int get(int key) {
+        
         if(map.find(key)==map.end()){
             return -1;
         }
+
+        // But remember the golden rule of an LRU Cache: Any time we touch an item, it becomes the Most Recently Used.
         dll.splice(dll.begin(),dll,map[key]);
 
         return map[key]->second;
@@ -31,9 +42,14 @@ public:
 
         //the key is new but the cache is full
         if(dll.size()==cap){
+
+            //dll.back().first grabs the key out of the {key, value} pair sitting at the back of the list.
             int lru_key = dll.back().first;
 
+            //dll.pop_back() destroys the node, removing it from the list.
             dll.pop_back();
+
+
             map.erase(lru_key);
         }
 
