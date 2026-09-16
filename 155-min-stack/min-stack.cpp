@@ -8,7 +8,7 @@ public:
     
     void push(int value) {
         stk.push(value);
-        if(minStk.empty() || value<= minStk.top()){
+        if(minStk.empty()|| value <= minStk.top()){
             minStk.push(value);
         }
     }
@@ -18,6 +18,7 @@ public:
             minStk.pop();
         }
         stk.pop();
+        
     }
     
     int top() {
