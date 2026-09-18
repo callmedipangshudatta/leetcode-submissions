@@ -1,60 +1,42 @@
 class LRUCache {
-    private:
-
-        int cap;
-
-        using ListType = std::list<std::pair<int,int>>;
-
-        ListType dll;
-
-        //key,value 
-        std::unordered_map<int,ListType::iterator> map;
-
+private:
+    int cap;
+    std::list<std::pair<int,int>> dll;
+    std::unordered_map<int,std::list<std::pair<int,int>>::iterator> cache;
 public:
-
-    //constructor
-    //this tells LRUCche that it has capacity of 2 items
     LRUCache(int capacity) {
-        cap = capacity;
+        //how to intialize the LRU Cche with positive size capacity
+        if(capacity > 0 ){
+            cap = capacity;
+        }
     }
     
-
     int get(int key) {
-        
-        if(map.find(key)==map.end()){
+        //to get the value and mark it as "Most Recently Used"
+        if(cache.find(key) == cache.end()){
             return -1;
         }
-
-        // But remember the golden rule of an LRU Cache: Any time we touch an item, it becomes the Most Recently Used.
-        dll.splice(dll.begin(),dll,map[key]);
-
-        return map[key]->second;
+        dll.splice(dll.begin(),dll,cache[key]);
+        return cache[key]->second;
     }
     
+    
     void put(int key, int value) {
-        if(map.find(key) != map.end()){
-            map[key]->second = value;
-
-            //move the updated node to the front(MRU)
-            dll.splice(dll.begin(),dll,map[key]);
+        //how to update the value of key if key exist
+        if(cache.find(key) != cache.end()){
+            cache[key]->second = value;
+            dll.splice(dll.begin(),dll,cache[key]);
             return;
         }
 
-        //the key is new but the cache is full
-        if(dll.size()==cap){
-
-            //dll.back().first grabs the key out of the {key, value} pair sitting at the back of the list.
+        if(cache.size()==cap){
             int lru_key = dll.back().first;
-
-            //dll.pop_back() destroys the node, removing it from the list.
+            cache.erase(lru_key);
             dll.pop_back();
-
-
-            map.erase(lru_key);
         }
 
         dll.push_front({key,value});
-        map[key] = dll.begin();
+        cache[key] = dll.begin();
     }
 };
 
