@@ -1,24 +1,13 @@
 class LRUCache {
-    //C++ will treat it as private by default
     int cap;
-
-    //we just need to basically put the item from anywhere to first position
-    //Doubley Linked List 
     std::list<pair<int,int>> dll;
-
-    //The functions get and put must each run in O(1) average time complexity.
-    //Instant Lookup is Required
-    std::unordered_map<int,std::list<pair<int,int>>::iterator> cache;
-
+    std::unordered_map<int, std::list<pair<int,int>>:: iterator> cache;
 public:
-
-    //Intialize the LRU Cache with positive size "capacity"
     LRUCache(int capacity) {
-        if(capacity > 0){
+        if(capacity>0){
             cap = capacity;
         }
     }
-    
     
     int get(int key) {
         if(cache.find(key) == cache.end()){
