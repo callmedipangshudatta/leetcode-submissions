@@ -17,23 +17,18 @@ public:
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        if(!head) return nullptr;
-
-        //  Step-1
-
-        //we started our traversal pointer at the very beginning of original LL
+        if(!head){
+            return nullptr;
+        }
+        
         Node* curr = head;
-
-        //this loop run until it hits 'nullptr'
         while(curr){
-            //created new exact node
-            Node* clone = new Node(curr->val);
-            clone->next = curr->next;
-            curr->next = clone;
-            curr = clone->next;
+            Node* nextNode = curr->next;
+            curr->next = new Node(curr->val);
+            curr->next->next = nextNode;
+            curr = nextNode;
         }
 
-        //Step - 2 Assign random pointers to the cloned nodes
         curr = head;
         while(curr){
             if(curr->random){
@@ -43,16 +38,15 @@ public:
         }
 
         curr = head;
-        Node* dummy = new Node(0);
-        Node* copyCurr = dummy;
+        Node* pseudoHead = new Node(0);
+        Node* copyCurr = pseudoHead;
 
         while(curr){
             copyCurr->next = curr->next;
             copyCurr = copyCurr->next;
-            curr->next = copyCurr->next;
+            curr->next = curr->next->next;
             curr = curr->next;
         }
-        return dummy->next;
-        
+        return pseudoHead->next;
     }
 };
