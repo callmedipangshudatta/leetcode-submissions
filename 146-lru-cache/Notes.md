@@ -1,1 +1,1 @@
-<h2>lru-cache Notes</h2><hr>[ Time taken: 21m 6s ]
+<h2>lru-cache Notes</h2><hr>[ Time taken: 11m 15s ]
