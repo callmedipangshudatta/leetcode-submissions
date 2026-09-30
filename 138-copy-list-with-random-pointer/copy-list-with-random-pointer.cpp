@@ -24,7 +24,7 @@ public:
             curr->next->next = nextNode;
             curr = nextNode;
         }
-
+        
         curr = head;
         while(curr != nullptr){
             if(curr->random){
@@ -36,14 +36,12 @@ public:
         curr = head;
         Node newLL(0);
         Node* copyCurr = &newLL;
-
         while(curr != nullptr){
             copyCurr->next = curr->next;
             copyCurr = copyCurr->next;
             curr->next = curr->next->next;
             curr = curr->next;
         }
-
         return newLL.next;
     }
 };
