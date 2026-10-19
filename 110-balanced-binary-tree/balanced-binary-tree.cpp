@@ -10,8 +10,9 @@
  * };
  */
 class Solution {
+
 public:
-    int height(TreeNode*root){
+    int height(TreeNode* root){
         if(root == nullptr){
             return 0;
         }
@@ -21,12 +22,13 @@ public:
         int right = height(root->right);
         if(right == -1) return -1;
 
-        if(abs(right-left)>1){
+        if(abs(left-right)>1){
             return -1;
         }
-        return 1 + max(left,right);
+        return 1+max(left,right);
     }
     bool isBalanced(TreeNode* root) {
+        //tells us whether tree is balanced or not
         return height(root) != -1;
     }
 };
