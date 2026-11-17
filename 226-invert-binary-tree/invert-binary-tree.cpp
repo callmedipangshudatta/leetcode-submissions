@@ -16,8 +16,8 @@ public:
             return nullptr;
         }
         swap(root->left,root->right);
-        invertTree(root->left);
         invertTree(root->right);
+        invertTree(root->left);
         return root;
     }
 };
