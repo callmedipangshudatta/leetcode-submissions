@@ -13,11 +13,18 @@ class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
         if(root == nullptr){
-            return nullptr;
+            return root;
         }
+        //change the structure of current node
         swap(root->left,root->right);
+
+        //recursive inverts the right subtree
         invertTree(root->right);
+
+        //recursive inverts the left subtree
         invertTree(root->left);
+
+        //return the root pointer of modified tree
         return root;
     }
 };
